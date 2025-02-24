@@ -2,11 +2,52 @@
 <html>
 <head>
     <title>Login Page</title>
+    <style>
+        /* Reset and center the content vertically and horizontally */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+          }
+          /* Position the user button in the top-right corner */
+          #user-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            padding: 20px;
+        }
+        /* Style for the "View Content" button */
+        .view-content-button {
+            display: inline-block;
+            background-color: #e63946; /* Modern red color */
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        /* Ensure the sign-in div is horizontally centered */
+        #sign-in {
+            margin: 0 auto;
+            display: block;
+            width: fit-content;
+        }
+    </style>
 </head>
 <body>
-    <h1>Please login</h1>
-    <p>You are viewing the login.html file. Once you have logged in, you may visit the <a href="/">index.html</a> file.</p>
-    <div id="app"></div>
+    <div class="login-container">
+        <h1>Please login</h1>
+        <p>You are viewing the login.html file. Once you have logged in, you may visit the content <a href="/">here</a>.</p>
+        <div id="app"></div>
+      </div>
 
 <!-- Initialize Clerk with your
 Clerk Publishable Key and Frontend API URL -->
@@ -31,17 +72,20 @@ Clerk Publishable Key and Frontend API URL -->
       
       if (Clerk.user.publicMetadata && Clerk.user.publicMetadata.isCustomer === true) {
         statusMessage = `Logged in as ${email}: Authorized`;
+        button = `<br><a class="view-content-button" href="index.html">View Content</a>`
       } else {
         statusMessage = `Logged in as ${email}: Not authorized`;
+        button = ``
       }
       content = `<div id="user-button"></div>`;
     } else {
       statusMessage = "Not logged in";
       content = `<div id="sign-in"></div>`;
+      button = ``
     }
 
-    // Render the UI along with our status message.
-    document.getElementById('app').innerHTML = content + `<p>${statusMessage}</p>`;
+    // Render the UI along with our status message and add a red "View Content" button linking to "index.html"
+    document.getElementById('app').innerHTML = `<p>${statusMessage}</p>` + content + button;
 
     if (Clerk.user) {
       Clerk.mountUserButton(document.getElementById('user-button'))
