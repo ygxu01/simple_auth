@@ -8,10 +8,10 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 CLERK_SECRET_KEY = config("CLERK_SECRET_KEY")
-ENVIRONMENT = config("ENVIRONMENT")
+ENVIRONMENT = config("ENVIRONMENT", default="production")
 DOMAIN = config("DOMAIN")
 CLERK_DOMAIN = config("CLERK_DOMAIN")
-
+VERCEL_APP_URL = config("VERCEL_APP_URL")
 # Initialize FastAPI app
 app = FastAPI()
 
@@ -19,6 +19,7 @@ app = FastAPI()
 allowed_origins = [
     f"https://{CLERK_DOMAIN}",
     f"https://{DOMAIN}",
+    f"https://{VERCEL_APP_URL}",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -63,6 +64,7 @@ async def clerk_auth_middleware(request: Request, call_next):
             # "https://example.com",
             f"https://{CLERK_DOMAIN}",
             f"https://{DOMAIN}",
+            f"https://{VERCEL_APP_URL}",
             "http://0.0.0.0:8000",
             "http://localhost:8000",
         ]
@@ -71,6 +73,7 @@ async def clerk_auth_middleware(request: Request, call_next):
             # "https://example.com",
             f"https://{CLERK_DOMAIN}",
             f"https://{DOMAIN}",
+            f"https://{VERCEL_APP_URL}",
         ]
     options = AuthenticateRequestOptions(authorized_parties=authorized_parties)
 
@@ -93,4 +96,4 @@ async def clerk_auth_middleware(request: Request, call_next):
 
 
 # Mount the "main" directory to serve static files (including index.html, login.html, etc.)
-app.mount("/", StaticFiles(directory="./main", html=True), name="main")
+app.mount("/", StaticFiles(directory="./ex5_simple_auth/main", html=True), name="main")
