@@ -26,11 +26,13 @@ Clerk Publishable Key and Frontend API URL -->
     let statusMessage = "";
 
     if (Clerk.user) {
-      // User is logged in; check the public metadata for authorization.
+      // Extract the email address from Clerk.user.
+      const email = (Clerk.user.emailAddresses && Clerk.user.emailAddresses[0] && Clerk.user.emailAddresses[0].emailAddress) || "Unknown Email";
+      
       if (Clerk.user.publicMetadata && Clerk.user.publicMetadata.isCustomer === true) {
-        statusMessage = "Logged in, Role is Authorized";
+        statusMessage = `Logged in as ${email}: Authorized`;
       } else {
-        statusMessage = "Logged in, Role Not Authorized";
+        statusMessage = `Logged in as ${email}: Not authorized`;
       }
       content = `<div id="user-button"></div>`;
     } else {
