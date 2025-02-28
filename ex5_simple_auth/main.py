@@ -11,7 +11,7 @@ CLERK_SECRET_KEY = config("CLERK_SECRET_KEY")
 ENVIRONMENT = config("ENVIRONMENT", default="production")
 DOMAIN = config("DOMAIN")
 CLERK_DOMAIN = config("CLERK_DOMAIN")
-VERCEL_APP_URL = config("VERCEL_APP_URL")
+APP_URL_VERCEL = config("APP_URL_VERCEL")
 # Initialize FastAPI app
 app = FastAPI()
 
@@ -19,7 +19,7 @@ app = FastAPI()
 allowed_origins = [
     f"https://{CLERK_DOMAIN}",
     f"https://{DOMAIN}",
-    f"https://{VERCEL_APP_URL}",
+    f"https://{APP_URL_VERCEL}",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -64,7 +64,7 @@ async def clerk_auth_middleware(request: Request, call_next):
             # "https://example.com",
             f"https://{CLERK_DOMAIN}",
             f"https://{DOMAIN}",
-            f"https://{VERCEL_APP_URL}",
+            f"https://{APP_URL_VERCEL}",
             "http://0.0.0.0:8000",
             "http://localhost:8000",
         ]
@@ -73,7 +73,7 @@ async def clerk_auth_middleware(request: Request, call_next):
             # "https://example.com",
             f"https://{CLERK_DOMAIN}",
             f"https://{DOMAIN}",
-            f"https://{VERCEL_APP_URL}",
+            f"https://{APP_URL_VERCEL}",
         ]
     options = AuthenticateRequestOptions(authorized_parties=authorized_parties)
 
