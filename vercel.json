@@ -1,14 +1,14 @@
 {
     "builds": [
         {
-            "src": "ex3_vercel_simple/main.py",
+            "src": "ex4_sphinx/main.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "ex3_vercel_simple/main.py"
+            "dest": "ex4_sphinx/main.py"
         }
     ]
-}
+}  
