@@ -9,6 +9,7 @@
         {
             "src": "/(.*)",
             "dest": "ex7_sphinx_auth/main.py"
+            
         }
     ]
 }  
